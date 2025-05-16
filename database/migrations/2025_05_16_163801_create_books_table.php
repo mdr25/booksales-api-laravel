@@ -9,10 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->decimal('price', 10, 2);
+            $table->integer('stock');
+            $table->string('cover_photo');
+            $table->foreignId('genre_id')->constrained('genres');
+            $table->foreignId('author_id')->constrained('authors');
             $table->timestamps();
         });
     }

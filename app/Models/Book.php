@@ -11,60 +11,9 @@ class Book extends Model
     protected $table = 'books';
     protected $fillable = ['title', 'description', 'price', 'stock', 'cover_photo', 'genre_id', 'author_id'];
 
-    public static function allBooks()
+    public function author()
     {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Harry Potter and the Sorcerer\'s Stone',
-                'description' => 'The first book in the Harry Potter series.',
-                'price' => 25000.00,
-                'stock' => 37,
-                'cover_photo' => 'harry_potter.jpg',
-                'genre_id' => 1,
-                'author_id' => 1
-            ],
-            [
-                'id' => 2,
-                'title' => 'The Lord of the Rings',
-                'description' => 'A classic fantasy novel by J.R.R. Tolkien.',
-                'price' => 60000.00,
-                'stock' => 28,
-                'cover_photo' => 'the_lord_of_the_rings.jpg',
-                'genre_id' => 1,
-                'author_id' => 2
-            ],
-            [
-                'id' => 3,
-                'title' => '1984',
-                'description' => 'A dystopian novel by George Orwell.',
-                'price' => 40000.00,
-                'stock' => 40,
-                'cover_photo' => '1984.jpg',
-                'genre_id' => 2,
-                'author_id' => 3
-            ],
-            [
-                'id' => 4,
-                'title' => 'The Hitchhiker\'s Guide to the Galaxy',
-                'description' => 'A comedy science fiction novel by Douglas Adams.',
-                'price' => 30000.00,
-                'stock' => 20,
-                'cover_photo' => 'the_hitchhikers_guide_to_the_galaxy.jpg',
-                'genre_id' => 3,
-                'author_id' => 3
-            ],
-            [
-                'id' => 5,
-                'title' => 'The Hobbit',
-                'description' => 'A fantasy novel by J.R.R. Tolkien.',
-                'price' => 50000.00,
-                'stock' => 8,
-                'cover_photo' => 'the_hobbit.jpg',
-                'genre_id' => 1,
-                'author_id' => 2
-            ]
-        ];
+        return $this->belongsTo(Author::class);
     }
 }
 

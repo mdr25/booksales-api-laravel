@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Genre;
+use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
     public function index()
     {
-        return view('genres.index', ['genres' => Genre::allGenres()]);
+        return response()->json([
+            'status' => 'success',
+            'data' => Genre::with('books')->get()
+        ]);
     }
 }

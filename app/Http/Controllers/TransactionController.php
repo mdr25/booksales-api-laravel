@@ -29,8 +29,11 @@ class TransactionController extends Controller
         ]);
 
         $user = Auth::user();
-        if (!$user) {
-            return response()->json(['status' => 'error', 'message' => 'Unauthorized'], 401);
+        if (!$user || $user->is_admin) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Admin tidak diperbolehkan membeli buku'
+            ], 403);
         }
 
         $book = Book::find($validated['book_id']);

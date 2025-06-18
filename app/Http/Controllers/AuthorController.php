@@ -17,8 +17,13 @@ class AuthorController extends Controller
 
     public function store(Request $request)
     {
+        if (!$request->hasFile('photo')) {
+            $request->merge(['photo' => null]);
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'bio' => 'nullable|string',
         ]);
 
@@ -29,6 +34,7 @@ class AuthorController extends Controller
             'data' => $author
         ]);
     }
+
 
     public function show($id)
     {

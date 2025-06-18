@@ -5,6 +5,12 @@ use App\Http\Controllers\GenreController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
+
+Route::post('register', [UserController::class, 'register']);
+Route::post('login', [UserController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout', [UserController::class, 'logout']);
+
 
 // Public routes
 Route::get('genres', [GenreController::class, 'index']);

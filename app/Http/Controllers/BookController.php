@@ -21,10 +21,19 @@ class BookController extends Controller
             'title' => 'required|string|max:255',
             'author_id' => 'required|exists:authors,id',
             'genre_id' => 'required|exists:genres,id',
-            'published_date' => 'required|date',
-            'isbn' => 'required|string|max:13',
-            'cover_image' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'description' => 'required|string',
+            'cover_photo' => 'required|image|max:2048',
         ]);
+
+        // Simpan file cover
+        if ($request->hasFile('cover_photo')) {
+            $file = $request->file('cover_photo');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension(); // hasil: abc123.jpg
+            $file->storeAs('public/covers', $filename); // simpan ke storage/app/public/covers
+            $validated['cover_photo'] = $filename; // hanya simpan nama file
+        }
 
         $book = Book::create($validated);
 
@@ -33,6 +42,7 @@ class BookController extends Controller
             'data' => $book
         ]);
     }
+
 
     public function show($id)
     {
@@ -63,10 +73,18 @@ class BookController extends Controller
             'title' => 'required|string|max:255',
             'author_id' => 'required|exists:authors,id',
             'genre_id' => 'required|exists:genres,id',
-            'published_date' => 'required|date',
-            'isbn' => 'required|string|max:13',
-            'cover_image' => 'nullable|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'cover_photo' => 'nullable|file|image|max:2048',
         ]);
+
+        if ($request->hasFile('cover_photo')) {
+            $file = $request->file('cover_photo');
+            $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/covers', $filename);
+            $validated['cover_photo'] = $filename;
+        }
 
         $book->update($validated);
 
@@ -75,6 +93,8 @@ class BookController extends Controller
             'data' => $book
         ]);
     }
+
+
 
     public function destroy($id)
     {
